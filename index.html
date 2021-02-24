@@ -5,9 +5,145 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="style.css" />
-    <title>Hogwarts Student List</title>
+    <link rel="stylesheet" href="https://use.typekit.net/hmo4ppp.css" />
+    <title>Hogwart's student list</title>
   </head>
   <body>
+    <header>
+      <div class="logo">
+        <img src="svg/Hogwarts.svg" alt="hogwarts" />
+      </div>
+      <h1>Hogwart's student list</h1>
+      <div class="houses">
+        <div class="house">
+          <img src="svg/GryffinDor.svg" alt="gryffindor" />
+          <p>xx</p>
+        </div>
+
+        <div class="house">
+          <img src="svg/Slythrin.svg" alt="slythrin" />
+          <p>xx</p>
+        </div>
+
+        <div class="house">
+          <img src="svg/RavenClaw.svg" alt="ravenclaw" />
+          <p>xx</p>
+        </div>
+
+        <div class="house">
+          <img src="svg/HuffelPuf.svg" alt="huffelpuf" />
+          <p>xx</p>
+        </div>
+      </div>
+      <div class="line"></div>
+    </header>
+
+    <section class="current">
+      <div class="current-students">
+        <h2>Current students</h2>
+        <p>xx</p>
+      </div>
+      <div class="expelled-students">
+        <h2>Expelled students</h2>
+        <p>xx</p>
+      </div>
+    </section>
+
+
+  <section id="popup">
+    <article class="popup_article">
+        <div id="close">X</div>
+        <div class="col1">
+            <img src="images/abbott_h.png" class="popup-profile" alt="">
+            <p class="student-firstname">Firstname: </p>
+            <p class="student-middlename">Middlename: </p>
+            <p class="student-lastname">Lastname: </p>
+            <p class="student-bloodstatus">BloodStatus: </p>
+        </div>
+        <div class="col1 col2">
+            <input type="checkbox">
+            <label for="chekcbox">Prefect</label>
+            <input type="checkbox">
+            <label for="chekcbox">Inq. Squad</label>
+        </div>
+        <div class="col1">
+          <img src="svg/GryffinDor.svg" class="popup-house" alt="">
+          <div class="admin-interface">
+            <p>Admin</p>
+            <div class="interface-buttons">
+            <button class="makePrefect" id="js-makePrefect">Make prefect</button>
+            <button class="makeInqS" id="js-makeInqS">Make Inq. Squad</button>
+            <button class="expellStudent" id="js-expellStudent">Expell Student</button>
+          </div>
+          </div>
+        </div>
+    </article>
+</section>
+
+    <main>
+      <table id="list">
+        <thead>
+          <tr class="table-header">
+            <th>Nx</th>
+
+            <th>
+              Sort by:
+              <select name="sorting" id="sort">
+                <option value="all">All</option>
+                <option value="firstnameA-Z">Firstname A-Z</option>
+                <option value="firstnameZ-A">Firstname Z-A</option>
+                <option value="lastnameA-Z">Lastname A-Z</option>
+                <option value="lastnameZ-A">Lastname Z-A</option>
+                <option value="houseA-Z">House A-Z</option>
+                <option value="houseZ-A">House Z-A</option>
+              </select>
+            </th>
+
+            <th>
+              Filter:
+              <select name="filter" id="filter">
+                <option value="all">All</option>
+                <option value="gryffindor">Gryffindor</option>
+                <option value="slythrin">Slytherin</option>
+                <option value="ravenclaw">Ravenclaw</option>
+                <option value="hufflepuf">Hufflepuf</option>
+                <option value="expelled">Expelled</option>
+                <option value="house">Non-expelled</option>
+              </select>
+            </th>
+
+            <th>
+              Search:
+              <input type="search" />
+            </th>
+          </tr>
+        </thead>
+        <thead class="table-header">
+            <th>First name</th>
+            <th>Last name</th>
+            <th>Middle name (if any)</th>
+            <th>Nickname (if any)</th>
+            <th>Photo</th>
+            <th>House</th>
+          </tr>
+        </thead>
+        <tbody class="table-body">
+          <!-- student template will be copied and inserted here -->
+        </tbody>
+      </table>
+
+      <template id="student">
+        <tr class="single-student">
+          <td data-field="firstname">FIRST NAME</td>
+          <td data-field="lastname">LAST NAME</td>
+          <td data-field="middlename">MIDDLE NAME</td>
+          <td data-field="nickname">NICKNAME</td>
+          <td data-field="photo"><img id="profile" src="" alt="" /></td>
+          <td data-field="house">HOUSE</td>
+        </tr>
+      </template>
+    </main>
+
     <script src="script.js"></script>
   </body>
 </html>
