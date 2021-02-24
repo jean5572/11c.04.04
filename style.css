@@ -124,3 +124,15 @@ header h1 {
   font-weight: bold;
   cursor: pointer;
 }
+
+.hide {
+  display: none;
+}
+
+.grey {
+  filter: grayscale(100%);
+}
+
+.color {
+  filter: grayscale(0%);
+}

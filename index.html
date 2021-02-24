@@ -61,10 +61,8 @@
             <p class="student-bloodstatus">BloodStatus: </p>
         </div>
         <div class="col1 col2">
-            <input type="checkbox">
-            <label for="chekcbox">Prefect</label>
-            <input type="checkbox">
-            <label for="chekcbox">Inq. Squad</label>
+          <p class="squad"><span class="size">🎖</span> Inquisitorial squad</p>
+          <p class="prefect"><span class="size">🏆</span> Prefect</p>
         </div>
         <div class="col1">
           <img src="svg/GryffinDor.svg" id="popup-house" alt="">
@@ -107,8 +105,10 @@
                 <option value="slytherin">Slytherin</option>
                 <option value="ravenclaw">Ravenclaw</option>
                 <option value="hufflepuff">Hufflepuf</option>
+                <option value="prefect">Prefect</option>
+                <option value="inqs">Inq.S</option>
                 <option value="expelled">Expelled</option>
-                <option value="house">Non-expelled</option>
+                <option value="non">Non-expelled</option>
               </select>
             </th>
 
@@ -119,11 +119,13 @@
           </tr>
         </thead>
         <thead class="table-header">
+            <th>Photo</th>
             <th>First name</th>
             <th>Last name</th>
             <th>Middle name (if any)</th>
             <th>Nickname (if any)</th>
-            <th>Photo</th>
+            <th>Prefect</th>
+            <th>Inq. S</th>
             <th>House</th>
           </tr>
         </thead>
@@ -134,16 +136,43 @@
 
       <template id="student">
         <tr class="single-student">
+          <td data-field="photo"><img id="profile" src="" alt="" /></td>
           <td data-field="firstname">FIRST NAME</td>
           <td data-field="lastname">LAST NAME</td>
           <td data-field="middlename">MIDDLE NAME</td>
           <td data-field="nickname">NICKNAME</td>
-          <td data-field="photo"><img id="profile" src="" alt="" /></td>
+          <td data-field="prefect" class="grey">🏆</td>
+          <td data-field="inqs" class="grey">🎖</td>
           <td data-field="house">HOUSE</td>
         </tr>
       </template>
     </main>
 
+    <section class="promptbox hide">
+      <article>
+        <h1 id="heading">OH NO!</h1>
+        <p class="prompttext">
+          There can only be 2 prefects and only one of each gender.<br />
+          Would you like to remove <span class="removedStudent">another student</span> from the prefect list and add <span class="addedStudent">this student</span> instead ?
+        </p>
+        <p class="squadtext">
+          Sorry, only students with the status pureblood or students from Slytherin kan be appointed the Inquisitorial squad.
+        </p>
+        <button class="no">No</button>
+        <button class="remove">Remove</button>
+      </article>
+    </section>
+
+
+    <section class="noBox hide">
+      <article>
+        <h1 id="heading2">Nah aaah!</h1>
+        <p class="noText">
+          Lisa remains forever!!!!!
+        </p>
+        <button class="argh">I LOVE LISA</button>
+      </article>
+    </section>
     <script src="script.js"></script>
   </body>
 </html>

@@ -3,6 +3,8 @@ window.addEventListener("DOMContentLoaded", init);
 
 const allStudents = [];
 let expelledStudents = [];
+let filterBy = "all";
+let sortBy = "event";
 
 function init() {
   console.log("DOM Loaded");
@@ -16,10 +18,10 @@ function init() {
 
 function readAllValues() {
   document.querySelector("#filter").onchange = function () {
-    readFilterValues(this.value);
+    selectFilter(this.value);
   };
   document.querySelector("#sort").onchange = function () {
-    readSortingValues(this.value);
+    selectSort(this.value);
   };
 
   // readSortingValues();
@@ -44,6 +46,9 @@ function prepareStudentObjects(studentData) {
       nickName: "",
       photo: "",
       house: "",
+      prefect: false,
+      squad: false,
+      expelled: false,
     };
 
     //Defining the splitFullName using split() from JSON
@@ -136,6 +141,42 @@ function readFilterValues(event) {
   displayList(filteredList);
 }
 
+function selectFilter(event) {
+  const filterBy = event;
+  // console.log(`User selected ${filterBy}`);
+  setFilter(filterBy);
+}
+
+function setFilter(filter) {
+  filterBy = filter;
+  // console.log(`User selected ${filterBy}`);
+  buildList();
+}
+
+function filterList(filteredList) {
+  // let filteredList = allStudents;
+
+  if (filterBy === "gryffindor") {
+    filteredList = filteredList.filter(isGryffindor);
+  } else if (filterBy === "slytherin") {
+    filteredList = filteredList.filter(isSlytherin);
+  } else if (filterBy === "ravenclaw") {
+    filteredList = filteredList.filter(isRavenclaw);
+  } else if (filterBy === "hufflepuff") {
+    filteredList = filteredList.filter(isHufflepuff);
+  } else if (filterBy === "prefect") {
+    filteredList = filteredList.filter(isHouseAZ);
+  } else if (filterBy === "inqs") {
+    filteredList = filteredList.filter(isHouseZA);
+  } else if (filterBy === "expelled") {
+    filteredList = filteredList.filter(isHouseZA);
+  } else if (filterBy === "non") {
+    filteredList = filteredList.filter(isHouseZA);
+  }
+
+  return filteredList;
+}
+
 // FILTER FUNCTIONS
 function isAll(student) {
   console.log("all");
@@ -154,14 +195,45 @@ function isHufflepuff(student) {
   return student.house === "Hufflepuff";
 }
 
+function selectSort(event) {
+  const sortBy = event;
+  // console.log(`User selected ${filterBy}`);
+  setSort(sortBy);
+}
+
+function setSort(sort) {
+  sortBy = sort;
+  buildList();
+}
+
+//SORTLIST
+function sortList(sortedList) {
+  // let sortedList = allStudents;
+
+  if (sortBy === "firstnameA-Z") {
+    sortedList = sortedList.sort(isFirstnameAZ);
+  } else if (sortBy === "firstnameZ-A") {
+    sortedList = sortedList.sort(isFirstnameZA);
+  } else if (sortBy === "lastnameA-Z") {
+    sortedList = sortedList.sort(isLastnameAZ);
+  } else if (sortBy === "lastnameZ-A") {
+    sortedList = sortedList.sort(isLastnameZA);
+  } else if (sortBy === "houseA-Z") {
+    sortedList = sortedList.sort(isHouseAZ);
+  } else if (sortBy === "houseZ-A") {
+    sortedList = sortedList.sort(isHouseZA);
+  }
+
+  return sortedList;
+}
+
 function readSortingValues(event) {
   let choosenFilter = event;
   console.log(`Filter value is ${choosenFilter}`);
   // buildList();
   let sortingList = allStudents;
-  let valueSorting = document.querySelector("#sort").value;
 
-  switch (valueSorting) {
+  switch (choosenFilter) {
     case "all":
       sortingList = allStudents.sort(isAllSort);
       break;
@@ -279,16 +351,29 @@ function isHouseZA(houseA, houseB) {
 //   }
 // }
 
-function displayList(list) {
+// --------------ORIGINAL DISPLAYLIST--------------------
+// function displayList(list) {
+//   // clear the list
+//   document.querySelector("#list tbody").innerHTML = "";
+//   if (list.length === 34) {
+//     allStudents.forEach(displayStudent);
+//   } else {
+//     list.forEach(displayStudent);
+//   }
+//   // build a new list
+//   console.log(list);
+// }
+
+function buildList() {
+  const currentList = filterList(allStudents);
+  const sortedList = sortList(currentList);
+  displayList(sortedList);
+}
+
+function displayList(student) {
   // clear the list
   document.querySelector("#list tbody").innerHTML = "";
-  if (list.length === 34) {
-    allStudents.forEach(displayStudent);
-  } else {
-    list.forEach(displayStudent);
-  }
-  // build a new list
-  console.log(list);
+  student.forEach(displayStudent);
 }
 
 function displayStudent(student) {
@@ -302,27 +387,33 @@ function displayStudent(student) {
   clone.querySelector("[data-field=nickname]").textContent = student.nickName;
   clone.querySelector("#profile").src = "./images/" + student.lastName.toLowerCase() + "_" + student.firstName.substring(0, 1).toLowerCase() + ".png";
   clone.querySelector("[data-field=house]").textContent = student.house;
+  //Why doesn't it register click?
 
-  //PopUp PROBLEM!
-  clone.querySelector("#popup-profile").src = "./images/" + student.lastName.toLowerCase() + "_" + student.firstName.substring(0, 1).toLowerCase() + ".png";
-  clone.querySelector("#popup-house").src = "./house/" + student.house.toLowerCase() + ".svg";
-
-  // if (student.lastName === "-unknown-") {
-  //   clone.querySelector("#img-student").src = `images/unknown.png`;
-  // } else if (student.lastName === "Finch-Fletchley") {
-  //   clone.querySelector("#img-student").src = `images/fletchley_j.png`;
-  // } else if (student.fullName === "Padma Patil") {
-  //   clone.querySelector("#img-student").src = `images/patil_padme.png`;
-  // } else if (student.fullName === "Padma Patil") {
-  //   clone.querySelector("#img-student").src = `images/patil_padme.png`;
-  // } else {
-  //   clone.querySelector("#img-student").src = `images/${student.image}`;
-  // }
+  clone.querySelector("[data-field=prefect]").onclick = () => {
+    clickAddAsPrefect();
+  };
+  //PREFECT
+  if (student.prefect === true) {
+    // console.log("prefect true");
+    clone.querySelector("[data-field=prefect]").classList.add("color");
+  } else {
+    clone.querySelector("[data-field=prefect]").classList.remove("color");
+    // console.log("prefect false");
+  }
 
   //addEventListener so it can click?
-  clone.querySelector(".single-student").onclick = () => {
+  clone.querySelector("#profile").onclick = () => {
     showStudentDetails(student);
   };
+
+  function clickAddAsPrefect() {
+    if (student.prefect === true) {
+      student.prefect = false;
+    } else {
+      student.prefect = true;
+    }
+    //update list!
+  }
   // append clone to list
   document.querySelector(".table-body").appendChild(clone);
 }
@@ -333,6 +424,14 @@ function showStudentDetails(student) {
   popup.querySelector(".student-firstname").textContent = `Firstname: ` + student.firstName;
   popup.querySelector(".student-middlename").textContent = `Middlename: ` + student.middleName;
   popup.querySelector(".student-lastname").textContent = `Lastname: ` + student.lastName;
+  document.querySelector("#popup-profile").src = "./images/" + student.lastName.toLowerCase() + "_" + student.firstName.substring(0, 1).toLowerCase() + ".png";
+  document.querySelector("#popup-house").src = "./house/" + student.house.toLowerCase() + ".svg";
+  document.querySelector("#js-makeInqS").addEventListener("click", checkForSquad);
 }
 
 document.querySelector("#close").addEventListener("click", () => (popup.style.display = "none"));
+
+function checkForSquad(student) {
+  console.log("checkSquad");
+  // if(student.)
+}
