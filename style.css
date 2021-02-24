@@ -73,6 +73,10 @@ header h1 {
   padding-bottom: 10px;
 }
 
+#profile {
+  cursor: pointer;
+}
+
 #popup {
   position: fixed;
   left: 0;

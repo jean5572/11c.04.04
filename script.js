@@ -26,7 +26,7 @@ function readAllValues() {
 
   // readSortingValues();
 }
-
+//LOAD JSON
 async function loadJSON() {
   const studentJSON = "https://petlatkea.dk/2021/hogwarts/students.json";
   const response = await fetch(studentJSON);
@@ -34,7 +34,7 @@ async function loadJSON() {
 
   prepareStudentObjects(studentData);
 }
-
+//PREPARE STUDENT OBJECT + LETTERS
 function prepareStudentObjects(studentData) {
   studentData.forEach((studentObject) => {
     // TODO: Create new object with cleaned data - and store that in the allAnimals array
@@ -101,46 +101,9 @@ function prepareStudentObjects(studentData) {
     //Combining array and adding (pushing) animal into it
     allStudents.push(student);
   });
-  displayList(allStudents);
+  buildList();
 }
-
-//ReadFilterValues
-function readFilterValues(event) {
-  console.log(event);
-  let choosenFilter = event;
-  console.log(`Filter value is ${choosenFilter}`);
-  // buildList();
-  let filteredList = allStudents;
-  // let valueFilter = document.querySelector("#filter").value;
-
-  switch (choosenFilter) {
-    case "all":
-      filteredList = allStudents.filter(isAll);
-      break;
-
-    case "gryffindor":
-      filteredList = allStudents.filter(isGryffindor);
-      break;
-
-    case "slytherin":
-      filteredList = allStudents.filter(isSlytherin);
-      break;
-
-    case "ravenclaw":
-      filteredList = allStudents.filter(isRavenclaw);
-      break;
-
-    case "hufflepuff":
-      filteredList = allStudents.filter(isHufflepuff);
-      break;
-
-    default:
-      console.log("ERROR value not found");
-      break;
-  }
-  displayList(filteredList);
-}
-
+//SELECT FILTER FROM EVENT
 function selectFilter(event) {
   const filterBy = event;
   // console.log(`User selected ${filterBy}`);
@@ -153,6 +116,7 @@ function setFilter(filter) {
   buildList();
 }
 
+//FILTER LIST
 function filterList(filteredList) {
   // let filteredList = allStudents;
 
@@ -195,6 +159,7 @@ function isHufflepuff(student) {
   return student.house === "Hufflepuff";
 }
 
+//SELECT FILTER FROM EVENT
 function selectSort(event) {
   const sortBy = event;
   // console.log(`User selected ${filterBy}`);
@@ -227,48 +192,7 @@ function sortList(sortedList) {
   return sortedList;
 }
 
-function readSortingValues(event) {
-  let choosenFilter = event;
-  console.log(`Filter value is ${choosenFilter}`);
-  // buildList();
-  let sortingList = allStudents;
-
-  switch (choosenFilter) {
-    case "all":
-      sortingList = allStudents.sort(isAllSort);
-      break;
-    case "firstnameA-Z":
-      sortingList = allStudents.sort(isFirstnameAZ);
-      break;
-
-    case "firstnameZ-A":
-      sortingList = allStudents.sort(isFirstnameZA);
-      break;
-
-    case "lastnameA-Z":
-      sortingList = allStudents.sort(isLastnameAZ);
-      break;
-
-    case "lastnameZ-A":
-      sortingList = allStudents.sort(isLastnameZA);
-      break;
-
-    case "houseA-Z":
-      sortingList = allStudents.sort(isHouseAZ);
-      break;
-
-    case "houseZ-A":
-      sortingList = allStudents.sort(isHouseZA);
-      break;
-
-    default:
-      console.log("ERROR value not found");
-      break;
-  }
-  displayList(sortingList);
-}
-
-// FILTER FUNCTIONS
+// SORTING FUNCTIONS
 function isAllSort(student) {
   return allStudents;
 }
@@ -314,68 +238,22 @@ function isHouseZA(houseA, houseB) {
     return -1;
   }
 }
-// function buildList() {
-//   let currentList = filterList(allStudents);
-//   currentList = sortList(currentList);
 
-//   displayList(currentList);
-// }
-
-// function filterList(currentList) {
-//   // Not working
-//   // let choosenFilter = document.querySelector("#filter").value;
-//   switch (choosenFilter) {
-//     case "all":
-//       filteredList = allStudents.filter(isAll);
-//       break;
-
-//     case "gryffindor":
-//       filteredList = filteredList.filter(isGryffindor);
-//       break;
-
-//     case "slytherin":
-//       filteredList = allStudents.filter(isSlytherin);
-//       break;
-
-//     case "ravenclaw":
-//       filteredList = allStudents.filter(isRavenclaw);
-//       break;
-
-//     case "hufflepuf":
-//       filteredList = allStudents.filter(isHufflepuf);
-//       break;
-
-//     default:
-//       console.log("ERROR value not found");
-//       break;
-//   }
-// }
-
-// --------------ORIGINAL DISPLAYLIST--------------------
-// function displayList(list) {
-//   // clear the list
-//   document.querySelector("#list tbody").innerHTML = "";
-//   if (list.length === 34) {
-//     allStudents.forEach(displayStudent);
-//   } else {
-//     list.forEach(displayStudent);
-//   }
-//   // build a new list
-//   console.log(list);
-// }
-
+//BUILD LIST = REFRESH LIST
 function buildList() {
   const currentList = filterList(allStudents);
   const sortedList = sortList(currentList);
   displayList(sortedList);
 }
 
+//DISPLAY LIST WITH STUDENTS
 function displayList(student) {
   // clear the list
   document.querySelector("#list tbody").innerHTML = "";
   student.forEach(displayStudent);
 }
 
+//DISPLAY SINGLE STUDENT FOREACH ABOVE
 function displayStudent(student) {
   // create clone
   const clone = document.querySelector("template#student").content.cloneNode(true);
@@ -387,11 +265,7 @@ function displayStudent(student) {
   clone.querySelector("[data-field=nickname]").textContent = student.nickName;
   clone.querySelector("#profile").src = "./images/" + student.lastName.toLowerCase() + "_" + student.firstName.substring(0, 1).toLowerCase() + ".png";
   clone.querySelector("[data-field=house]").textContent = student.house;
-  //Why doesn't it register click?
 
-  clone.querySelector("[data-field=prefect]").onclick = () => {
-    clickAddAsPrefect();
-  };
   //PREFECT
   if (student.prefect === true) {
     // console.log("prefect true");
@@ -400,6 +274,11 @@ function displayStudent(student) {
     clone.querySelector("[data-field=prefect]").classList.remove("color");
     // console.log("prefect false");
   }
+
+  //click prefect
+  clone.querySelector("[data-field=prefect]").onclick = () => {
+    clickAddAsPrefect();
+  };
 
   //addEventListener so it can click?
   clone.querySelector("#profile").onclick = () => {
@@ -413,11 +292,13 @@ function displayStudent(student) {
       student.prefect = true;
     }
     //update list!
+    buildList();
   }
   // append clone to list
   document.querySelector(".table-body").appendChild(clone);
 }
 
+//SHOW DETAILS OF STUDENT = POPUP
 function showStudentDetails(student) {
   // console.log("click");
   popup.style.display = "block";
@@ -426,10 +307,11 @@ function showStudentDetails(student) {
   popup.querySelector(".student-lastname").textContent = `Lastname: ` + student.lastName;
   document.querySelector("#popup-profile").src = "./images/" + student.lastName.toLowerCase() + "_" + student.firstName.substring(0, 1).toLowerCase() + ".png";
   document.querySelector("#popup-house").src = "./house/" + student.house.toLowerCase() + ".svg";
-  document.querySelector("#js-makeInqS").addEventListener("click", checkForSquad);
-}
+  // document.querySelector("#js-makeInqS").addEventListener("click", checkForSquad);
 
-document.querySelector("#close").addEventListener("click", () => (popup.style.display = "none"));
+  //CLOSE POPUP
+  document.querySelector("#close").addEventListener("click", () => (popup.style.display = "none"));
+}
 
 function checkForSquad(student) {
   console.log("checkSquad");
