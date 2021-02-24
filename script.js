@@ -2,6 +2,7 @@
 window.addEventListener("DOMContentLoaded", init);
 
 const allStudents = [];
+let expelledStudents = [];
 
 function init() {
   console.log("DOM Loaded");
@@ -95,7 +96,7 @@ function prepareStudentObjects(studentData) {
     //Combining array and adding (pushing) animal into it
     allStudents.push(student);
   });
-  displayList();
+  displayList(allStudents);
 }
 
 //ReadFilterValues
@@ -124,8 +125,8 @@ function readFilterValues(event) {
       filteredList = allStudents.filter(isRavenclaw);
       break;
 
-    case "hufflepuf":
-      filteredList = allStudents.filter(isHufflepuf);
+    case "hufflepuff":
+      filteredList = allStudents.filter(isHufflepuff);
       break;
 
     default:
@@ -149,8 +150,8 @@ function isSlytherin(student) {
 function isRavenclaw(student) {
   return student.house === "Ravenclaw";
 }
-function isHufflepuf(student) {
-  return student.house === "Hufflepuf";
+function isHufflepuff(student) {
+  return student.house === "Hufflepuff";
 }
 
 function readSortingValues(event) {
@@ -278,13 +279,16 @@ function isHouseZA(houseA, houseB) {
 //   }
 // }
 
-function displayList() {
+function displayList(list) {
   // clear the list
   document.querySelector("#list tbody").innerHTML = "";
-
+  if (list.length === 34) {
+    allStudents.forEach(displayStudent);
+  } else {
+    list.forEach(displayStudent);
+  }
   // build a new list
-  allStudents.forEach(displayStudent);
-  console.log("displayFilter");
+  console.log(list);
 }
 
 function displayStudent(student) {
@@ -296,23 +300,39 @@ function displayStudent(student) {
   clone.querySelector("[data-field=lastname]").textContent = student.lastName;
   clone.querySelector("[data-field=middlename]").textContent = student.middleName;
   clone.querySelector("[data-field=nickname]").textContent = student.nickName;
-  //Dummypicture "./images/" + name/house + ".png"
   clone.querySelector("#profile").src = "./images/" + student.lastName.toLowerCase() + "_" + student.firstName.substring(0, 1).toLowerCase() + ".png";
   clone.querySelector("[data-field=house]").textContent = student.house;
 
-  //addEventListener so it can click?
-  clone.querySelector(".single-student").addEventListener("click", showStudentDetails(student));
+  //PopUp PROBLEM!
+  clone.querySelector("#popup-profile").src = "./images/" + student.lastName.toLowerCase() + "_" + student.firstName.substring(0, 1).toLowerCase() + ".png";
+  clone.querySelector("#popup-house").src = "./house/" + student.house.toLowerCase() + ".svg";
 
+  // if (student.lastName === "-unknown-") {
+  //   clone.querySelector("#img-student").src = `images/unknown.png`;
+  // } else if (student.lastName === "Finch-Fletchley") {
+  //   clone.querySelector("#img-student").src = `images/fletchley_j.png`;
+  // } else if (student.fullName === "Padma Patil") {
+  //   clone.querySelector("#img-student").src = `images/patil_padme.png`;
+  // } else if (student.fullName === "Padma Patil") {
+  //   clone.querySelector("#img-student").src = `images/patil_padme.png`;
+  // } else {
+  //   clone.querySelector("#img-student").src = `images/${student.image}`;
+  // }
+
+  //addEventListener so it can click?
+  clone.querySelector(".single-student").onclick = () => {
+    showStudentDetails(student);
+  };
   // append clone to list
   document.querySelector(".table-body").appendChild(clone);
 }
 
 function showStudentDetails(student) {
-  console.log("click");
-  // popup.style.display = "block";
-  // popup.querySelector(".student-firstname").textContent = `Firstname: ` + student.firstName;
-  // popup.querySelector(".student-middlename").textContent = `Middlename: ` + student.middleName;
-  // popup.querySelector(".student-lastname").textContent = `Lastname: ` + student.lastName;
+  // console.log("click");
+  popup.style.display = "block";
+  popup.querySelector(".student-firstname").textContent = `Firstname: ` + student.firstName;
+  popup.querySelector(".student-middlename").textContent = `Middlename: ` + student.middleName;
+  popup.querySelector(".student-lastname").textContent = `Lastname: ` + student.lastName;
 }
 
 document.querySelector("#close").addEventListener("click", () => (popup.style.display = "none"));
