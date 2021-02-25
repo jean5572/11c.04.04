@@ -29,6 +29,7 @@ function readAllValues() {
 //LOAD JSON
 async function loadJSON() {
   const studentJSON = "https://petlatkea.dk/2021/hogwarts/students.json";
+  
   const response = await fetch(studentJSON);
   const studentData = await response.json();
 
@@ -327,7 +328,7 @@ function displayStudent(student) {
     if (student.inqS === true) {
       student.inqS = false;
     } else {
-      student.inqS = true;
+      checkInqS(student);
     }
     //update list!
     buildList();
@@ -421,6 +422,8 @@ function checkPrefect(selectedStudent) {
     student.prefect = true;
   }
 }
+
+function checkInqS() {}
 
 //SHOW DETAILS OF STUDENT = POPUP
 function showStudentDetails(student) {
