@@ -17,22 +17,22 @@
       <div class="houses">
         <div class="house">
           <img src="house/gryffindor.svg" alt="gryffindor" />
-          <p>xx</p>
+          <p><span data-field="numberGryffindor"></span></p>
         </div>
 
         <div class="house">
           <img src="house/slytherin.svg" alt="slythrin" />
-          <p>xx</p>
+          <p><span data-field="numberSlytherin"></span></p>
         </div>
 
         <div class="house">
           <img src="house/ravenclaw.svg" alt="ravenclaw" />
-          <p>xx</p>
+          <p><span data-field="numberRavenclaw"></span></p>
         </div>
 
         <div class="house">
           <img src="house/hufflepuff.svg" alt="hufflepuff" />
-          <p>xx</p>
+          <p><span data-field="numberHufflepuff"></span></p>
         </div>
       </div>
       <div class="line"></div>
@@ -41,11 +41,11 @@
     <section class="current">
       <div class="current-students">
         <h2>Current students</h2>
-        <p>xx</p>
+        <p><span data-field="numberHufflepuff"></span></p>
       </div>
       <div class="expelled-students">
         <h2>Expelled students</h2>
-        <p>xx</p>
+        <p><span data-field="numberHufflepuff"></span></p>
       </div>
     </section>
 
@@ -67,7 +67,7 @@
         <div class="col1">
           <img src="svg/GryffinDor.svg" id="popup-house" alt="">
           <!-- <div class="admin-interface">
-            <p>Admin</p>
+            <p>Admin</p>x
             <div class="interface-buttons">
             <button class="makePrefect" id="js-makePrefect">Make prefect</button>
             <button class="makeInqS" id="js-makeInqS">Make Inq. Squad</button>
@@ -82,7 +82,7 @@
       <table id="list">
         <thead>
           <tr class="table-header">
-            <th>Nx</th>
+            <th>N <span data-field="current-students-on-list"></span></th>
 
             <th>
               Sort by:
@@ -114,7 +114,7 @@
 
             <th>
               Search:
-              <input type="search" />
+              <input id="search" type="search" placeholder="Search for Students"/>
             </th>
           </tr>
         </thead>

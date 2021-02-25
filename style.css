@@ -170,3 +170,21 @@ header h1 {
   width: 2em;
   height: 2em;
 }
+
+.gryffindor {
+  background-color: brown;
+  border: 2px solid orange;
+}
+
+.hufflepuff {
+  background-color: yellow;
+  border: 2px solid black;
+}
+.slytherin {
+  background-color: lightgreen;
+  border: 2px solid black;
+}
+.ravenclaw {
+  background-color: brown;
+  border: 2px solid blue;
+}
