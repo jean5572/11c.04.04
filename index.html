@@ -16,22 +16,22 @@
       <h1>Hogwart's student list</h1>
       <div class="houses">
         <div class="house">
-          <img src="svg/GryffinDor.svg" alt="gryffindor" />
+          <img src="house/gryffindor.svg" alt="gryffindor" />
           <p>xx</p>
         </div>
 
         <div class="house">
-          <img src="svg/Slythrin.svg" alt="slythrin" />
+          <img src="house/slytherin.svg" alt="slythrin" />
           <p>xx</p>
         </div>
 
         <div class="house">
-          <img src="svg/RavenClaw.svg" alt="ravenclaw" />
+          <img src="house/ravenclaw.svg" alt="ravenclaw" />
           <p>xx</p>
         </div>
 
         <div class="house">
-          <img src="svg/HuffelPuf.svg" alt="huffelpuf" />
+          <img src="house/hufflepuff.svg" alt="hufflepuff" />
           <p>xx</p>
         </div>
       </div>
@@ -165,15 +165,29 @@
     </section>
 
 
-    <section class="noBox hide">
-      <article>
-        <h1 id="heading2">Nah aaah!</h1>
-        <p class="noText">
-          Lisa remains forever!!!!!
-        </p>
-        <button class="argh">I LOVE LISA</button>
-      </article>
-    </section>
+    <div id="remove-other" class="modal hide">
+      <div class="dialog">
+        <button class="closebutton">X</button>
+        <h2>Warning!</h2>
+        <p>There can be only one winner of each type <br>
+        do you want to remove the other winner?</p>
+        <button id="remove-other-button">Remove <span data-field="other-prefect"></span></button>
+      </div>
+    </div>
+
+    <div id="remove-aorb" class="modal hide">
+      <div class="dialog">
+        <button class="closebutton">X</button>
+        <h2>Warning!</h2>
+        <p>There can not be more than two winners <br>
+        do you want to remove one of the existing prefects?</p>
+        <div class="sidebyside">
+          <button id="remove-a">Remove <span data-field="prefectA"></span></button>
+          <button id="remove-b">Remove <span data-field="prefectB"></span></button>
+
+        </div>
+      </div>
+    </div>
     <script src="script.js"></script>
   </body>
 </html>

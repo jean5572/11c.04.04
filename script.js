@@ -43,11 +43,12 @@ function prepareStudentObjects(studentData) {
       firstName: "-unknown-",
       lastName: "-unknown-",
       middleName: "-unknown-",
+      gender: "",
       nickName: "",
       photo: "",
       house: "",
       prefect: false,
-      squad: false,
+      inqS: false,
       expelled: false,
     };
 
@@ -82,7 +83,7 @@ function prepareStudentObjects(studentData) {
     student.firstName = splitFullName[0].substring(0, 1).toUpperCase() + splitFullName[0].substring(1);
     student.lastName = fullName.substring(lastSpace).trim();
     student.middleName = fullName.substring(firstSpace + 1, lastSpace).trim();
-
+    student.gender = studentObject.gender;
     let index = 0;
     if (student.middleName[index] === '"') {
       student.nickName = student.middleName;
@@ -129,13 +130,13 @@ function filterList(filteredList) {
   } else if (filterBy === "hufflepuff") {
     filteredList = filteredList.filter(isHufflepuff);
   } else if (filterBy === "prefect") {
-    filteredList = filteredList.filter(isHouseAZ);
+    filteredList = filteredList.filter(isPrefect);
   } else if (filterBy === "inqs") {
-    filteredList = filteredList.filter(isHouseZA);
+    filteredList = filteredList.filter(isInqS);
   } else if (filterBy === "expelled") {
-    filteredList = filteredList.filter(isHouseZA);
+    filteredList = filteredList.filter(isExpelled);
   } else if (filterBy === "non") {
-    filteredList = filteredList.filter(isHouseZA);
+    filteredList = filteredList.filter(isStudent);
   }
 
   return filteredList;
@@ -157,6 +158,18 @@ function isRavenclaw(student) {
 }
 function isHufflepuff(student) {
   return student.house === "Hufflepuff";
+}
+function isPrefect(student) {
+  return student.prefect === true;
+}
+function isInqS(student) {
+  return student.inqS === true;
+}
+function isExpelled(student) {
+  return student.expelled === true;
+}
+function isStudent(student) {
+  return student.expelled === false;
 }
 
 //SELECT FILTER FROM EVENT
@@ -280,6 +293,20 @@ function displayStudent(student) {
     clickAddAsPrefect();
   };
 
+  //INQ SQUAD
+  if (student.inqS === true) {
+    // console.log("inqS true");
+    clone.querySelector("[data-field=inqs]").classList.add("color");
+  } else {
+    clone.querySelector("[data-field=inqs]").classList.remove("color");
+    // console.log("inqS false");
+  }
+
+  //click inqS
+  clone.querySelector("[data-field=inqs]").onclick = () => {
+    clickAddAsInqS();
+  };
+
   //addEventListener so it can click?
   clone.querySelector("#profile").onclick = () => {
     showStudentDetails(student);
@@ -289,13 +316,110 @@ function displayStudent(student) {
     if (student.prefect === true) {
       student.prefect = false;
     } else {
-      student.prefect = true;
+      checkPrefect(student);
+      // student.prefect = true;
     }
     //update list!
     buildList();
   }
+
+  function clickAddAsInqS() {
+    if (student.inqS === true) {
+      student.inqS = false;
+    } else {
+      student.inqS = true;
+    }
+    //update list!
+    buildList();
+  }
+
   // append clone to list
   document.querySelector(".table-body").appendChild(clone);
+}
+
+function checkPrefect(selectedStudent) {
+  const prefects = allStudents.filter((student) => student.prefect);
+  const numberOfPrefects = prefects.length;
+  const other = prefects.filter((student) => student.house === selectedStudent.house).shift();
+
+  //if there is another of the same type
+  if (other !== undefined) {
+    console.log(`there can only be one prefect of each gender`);
+    removeOther(other);
+  } else if (numberOfPrefects >= 2) {
+    console.log(`there can only be two prefects`);
+    removeAorB(prefects[0], prefects[1]);
+  } else {
+    makePrefect(selectedStudent);
+  }
+
+  console.log(`there are ${numberOfPrefects} prefects`);
+  //just for testing
+  makePrefect(selectedStudent);
+
+  function removeOther(other) {
+    //ask the user to ignore or remove 'other'
+    document.querySelector("#remove-other").classList.remove("hide");
+    document.querySelector("#remove-other .closebutton").addEventListener("click", closeDialog);
+    document.querySelector("#remove-other #remove-other-button").addEventListener("click", clickRemoveOther);
+
+    document.querySelector("#remove-other [data-field=other-prefect]").textContent = other.firstName;
+
+    function closeDialog() {
+      document.querySelector("#remove-other").classList.add("hide");
+      document.querySelector("#remove-other .closebutton").removeEventListener("click", closeDialog);
+      document.querySelector("#remove-other #remove-other-button").removeEventListener("click", clickRemoveOther);
+    }
+
+    function clickRemoveOther() {
+      removePrefect(other);
+      makePrefect(selectedStudent);
+      buildList();
+      closeDialog();
+    }
+  }
+  function removeAorB(prefectA, prefectB) {
+    //ask the user to ignore or remove a or b
+    document.querySelector("#remove-aorb").classList.remove("hide");
+    document.querySelector("#remove-aorb .closebutton").addEventListener("click", closeDialog);
+    document.querySelector("#remove-aorb #remove-a").addEventListener("click", clickRemoveA);
+    document.querySelector("#remove-aorb #remove-b").addEventListener("click", clickRemoveB);
+
+    //Show names on the buttons
+    document.querySelector("#remove-aorb [data-field=prefectA]").textContent = prefectA.firstName;
+    document.querySelector("#remove-aorb [data-field=prefectB]").textContent = prefectB.firstName;
+
+    //if user ignore do nothing
+    function closeDialog() {
+      document.querySelector("#remove-aorb").classList.add("hide");
+      document.querySelector("#remove-aorb .closebutton").removeEventListener("click", closeDialog);
+      document.querySelector("#remove-aorb #remove-a").removeEventListener("click", clickRemoveA);
+      document.querySelector("#remove-aorb #remove-b").removeEventListener("click", clickRemoveB);
+    }
+
+    function clickRemoveA() {
+      //if remove a
+      removePrefect(prefectA);
+      makePrefect(selectedStudent);
+      buildList();
+      closeDialog();
+    }
+
+    // else if remove b
+    function clickRemoveB() {
+      removePrefect(prefectB);
+      makePrefect(selectedStudent);
+      buildList();
+      closeDialog();
+    }
+  }
+  function removePrefect(prefectStudent) {
+    prefectStudent.prefect = false;
+  }
+
+  function makePrefect(student) {
+    student.prefect = true;
+  }
 }
 
 //SHOW DETAILS OF STUDENT = POPUP
