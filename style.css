@@ -154,12 +154,19 @@ header h1 {
   align-items: center;
 }
 
+.modal article {
+  box-shadow: 1px 1px 10px rgb(25, 25, 25);
+  padding: 2em;
+  border-radius: 10px;
+  background-color: #e3d9cd;
+  position: relative;
+}
+
 .dialog {
   box-shadow: 1px 1px 10px rgb(25, 25, 25);
   padding: 2em;
   border-radius: 10px;
   background-color: whitesmoke;
-  position: relative;
 }
 
 .closebutton {

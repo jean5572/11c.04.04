@@ -474,6 +474,32 @@ function checkInqS() {}
 //ERROR POPUP
 function prefectErrorBox(student) {
   console.log("error box");
+  document.querySelector(".promptbox").classList.remove("hide");
+  document.querySelector(".prompttext").classList.remove("hide");
+  document.querySelector(".squadtext").classList.add("hide");
+  document.querySelector(".no").textContent = "No";
+  document.querySelector(".remove").classList.remove("hide");
+
+  //Show the right name in the dialogue box (the student that should be removed)
+  allStudents.forEach((prefectStudent) => {
+    if (prefectStudent.prefect == true && prefectStudent.gender == student.gender && prefectStudent.theHouse == student.theHouse) {
+      document.querySelector(".removedStudent").textContent = prefectStudent.firstName;
+      document.querySelector(".addedStudent").textContent = student.firstName;
+    }
+    //Eventlister -> remove student when click on remove and add the current student
+    document.querySelector(".remove").addEventListener("click", function () {
+      if (prefectStudent.gender == student.gender) {
+        prefectStudent.prefect = false;
+        student.prefect = true;
+        buildList();
+      }
+      document.querySelector(".promptbox").classList.add("hide");
+    });
+
+    document.querySelector(".no").addEventListener("click", function () {
+      document.querySelector(".promptbox").classList.add("hide");
+    });
+  });
 }
 
 //SHOW DETAILS OF STUDENT = POPUP
