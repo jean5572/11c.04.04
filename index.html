@@ -41,11 +41,11 @@
     <section class="current">
       <div class="current-students">
         <h2>Current students</h2>
-        <p><span data-field="numberHufflepuff"></span></p>
+        <p><span data-field="currentStudents"></span></p>
       </div>
       <div class="expelled-students">
         <h2>Expelled students</h2>
-        <p><span data-field="numberHufflepuff"></span></p>
+        <p><span data-field="expelledStudents"></span></p>
       </div>
     </section>
 
@@ -60,10 +60,10 @@
             <p class="student-lastname">Lastname: </p>
             <p class="student-bloodstatus">BloodStatus: </p>
         </div>
-        <!-- <div class="col1 col2">
-          <p class="squad"><span class="size">🎖</span> Inquisitorial squad</p>
-          <p class="prefect"><span class="size">🏆</span> Prefect</p>
-        </div> -->
+        <div class="col1 col2">
+          <p class="grey1 pop">🏆</p>
+          <p class="grey1 pop">🎖</p>
+        </div>
         <div class="col1">
           <img src="svg/GryffinDor.svg" id="popup-house" alt="">
           <!-- <div class="admin-interface">
@@ -144,7 +144,7 @@
           <td data-field="prefect" class="grey">🏆</td>
           <td data-field="inqs" class="grey">🎖</td>
           <td data-field="house">HOUSE</td>
-          <td data-field="expell">🚫</td>
+          <td data-field="expell" class="grey expellLogo">🚫</td>
         </tr>
       </template>
     </main>
@@ -188,6 +188,19 @@
         </div>
       </div>
     </div>
+
+    <section class="noBox hide modal">
+      <article>
+        <h1 id="heading2">MUAHAHAH!</h1>
+        <p class="noText">
+          That won't work 😈
+        </p>
+        <button class="hackButton">You lose👹</button>
+      </article>
+    </section>
+    <p class="hacked"></p>
+    <p class="hacked2"></p>
+    <p class="hacked3"></p>
     <script src="script.js"></script>
   </body>
 </html>

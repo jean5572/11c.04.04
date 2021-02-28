@@ -88,9 +88,11 @@ header h1 {
 
   max-width: inherit;
   margin: 0 auto;
+  z-index: 2;
 }
 
 .popup_article {
+  border-radius: 20px;
   width: 80vw;
   height: 60vh;
   margin: 4rem auto;
@@ -98,6 +100,7 @@ header h1 {
 
   display: flex;
   padding: 30px;
+  position: relative;
 }
 
 .col1 {
@@ -127,6 +130,13 @@ header h1 {
   font-family: "Courier New", Courier, monospace;
   font-weight: bold;
   cursor: pointer;
+
+  position: absolute;
+  right: 0;
+  top: 0;
+  border-radius: 50%;
+  width: 2em;
+  height: 2em;
 }
 
 .hide {
@@ -134,8 +144,16 @@ header h1 {
   visibility: hidden;
 }
 
+.grey1 {
+  filter: grayscale(100%);
+}
 .grey {
   filter: grayscale(100%);
+  cursor: pointer;
+}
+
+.grey:hover {
+  filter: grayscale(0%);
 }
 
 .color {
@@ -152,6 +170,7 @@ header h1 {
   display: flex;
   justify-content: center;
   align-items: center;
+  z-index: 2;
 }
 
 .modal article {
@@ -179,19 +198,36 @@ header h1 {
 }
 
 .gryffindor {
-  background-color: brown;
+  background-color: rgb(190, 79, 79);
   border: 2px solid orange;
 }
 
 .hufflepuff {
-  background-color: yellow;
+  background-color: rgb(208, 208, 153);
   border: 2px solid black;
 }
 .slytherin {
-  background-color: lightgreen;
+  background-color: rgb(132, 169, 132);
   border: 2px solid black;
 }
 .ravenclaw {
-  background-color: brown;
-  border: 2px solid blue;
+  background-color: rgb(144, 113, 113);
+  border: 2px solid black;
+}
+
+/* HACKED */
+.hackedColor {
+  background-color: lightgreen;
+  opacity: 0.5;
+}
+.hacked1,
+.hacked2,
+.hacked3 {
+  font-size: 6rem;
+  position: fixed;
+  top: 15rem;
+  left: 0rem;
+  text-align: center;
+  width: 100%;
+  pointer-events: none;
 }
